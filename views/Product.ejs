@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="/product.css">
+    <title>Document</title>
+</head>
+<body class="productPage">
+    <%- include("./components/Header.ejs") %>
+    <section class="preductSection">
+        <div class="up">
+            <div class="left">
+                <img src="https://buffer.com/library/content/images/size/w1200/2023/10/free-images.jpg" alt="image1">
+            </div>
+            <div class="right">
+                <h1 class="title">Magic Camera</h1>
+                <p class="price">$300.99</p>
+                <form action="/add-product/1" method="POST"></form>
+                <button class="addToCart">Add to Cart</button>
+            </div>
+        </div>
+        <div class="desc">
+            Lorem ipsum dolor sit amet consectetur adipisicing elit. Reprehenderit dolores esse neque maiores, unde corporis temporibus cumque impedit, incidunt nisi natus, voluptatibus cupiditate provident. Maiores itaque aliquam doloremque magni culpa?
+        </div>
+    </section>
+</body>
+</html>

@@ -1,0 +1,12 @@
+.ordersPage{
+    color: white;
+    background-color: #211F1D; 
+}
+.orders{
+    width: 70%;
+    margin: auto;
+    display: flex;
+    flex-direction: column;
+    grid-gap: 30px;
+    margin-top: 50px;
+}

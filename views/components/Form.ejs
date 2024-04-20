@@ -1,0 +1,21 @@
+<head>
+    <link rel="stylesheet" href="/form.css">
+</head>
+<form class="form" action="<%= action %>" method="<%= method %>">
+    <% inputs.forEach(input => {
+        %>
+        <div class="input">
+            <p class="text"><%= input.text%></p>  
+            <input type="<%= input.type %>" name="<%= input.name %>">
+        </div>
+        <%
+    }); %>
+
+    <% buttons.forEach(element => {
+        %><button class="<%= element.class %>"><%= element.text %></button><%
+    }); %><br>
+
+    <% links.forEach(element => {
+        %><a class="<%= element.class %>" href="<%= element.href %>"><%= element.text %></a><%
+    }); %>
+</form>

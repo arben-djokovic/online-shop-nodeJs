@@ -1,0 +1,27 @@
+header{
+    color: #BF8B45;
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    border-bottom: 3px solid #BF8B45;
+    width: 80%;
+    margin: auto;
+} 
+a{
+    color: unset;
+    text-decoration: none;
+    cursor: pointer;
+}
+.headerUl{
+    display: flex;
+    grid-gap: 20px;
+    list-style-type: none;
+}
+.headerUl button{
+    background-color: unset;
+    border: 1px solid #BF8B45;
+    color: #BF8B45;
+    border-radius: 5px;
+    padding: 4px 7px;
+    cursor: pointer;
+}

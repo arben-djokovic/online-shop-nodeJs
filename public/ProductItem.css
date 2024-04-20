@@ -1,0 +1,20 @@
+.productItem{
+    background-color: #1D1A19;
+    width: 160px;
+}
+.productItem img {
+    width: 160px;
+    height: 100px;
+}
+.productItem .text {
+    padding: 10px;
+    text-align: center;
+}
+.productItem .text .viewBtn{
+    background-color: unset;
+    border: 1px solid #BF8B45;
+    color: #BF8B45;
+    border-radius: 5px;
+    padding: 4px 7px;
+    cursor: pointer;
+}

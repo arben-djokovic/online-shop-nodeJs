@@ -1,0 +1,19 @@
+.orderItem{
+    background-color: #3D3835;
+    display: flex;
+    justify-content: space-between;
+    padding: 20px;
+    border-radius: 10px;
+    align-items: center;
+}
+.orderItem .left .lf-up span{
+    color: #BF8B45;
+}
+.orderItem .right button{
+    background-color: #C97E24;
+    border: none;
+    border-radius: 5px;
+    padding: 10px 30px;
+    cursor: pointer;
+    color: white;
+}

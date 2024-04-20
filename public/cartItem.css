@@ -1,0 +1,28 @@
+.cartItem{
+    background-color: #1D1A19;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px 50px;
+    border-radius: 5px;
+}
+.cartItem .left{
+    display: flex;
+    flex-direction: column;
+    grid-gap: 0px;
+}
+.cartItem .left .price span{
+    color: gray;
+}
+.cartItem .right{
+    display: flex;
+    grid-gap: 2px;
+}
+.cartItem .right button{
+    background-color: unset;
+    border: 1px solid #BF8B45;
+    color: #BF8B45;
+    border-radius: 5px;
+    padding: 4px 7px;
+    cursor: pointer;
+}

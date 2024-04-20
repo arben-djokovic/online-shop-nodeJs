@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="cart.css">
+    <title>Document</title>
+</head>
+<body class="cartPage">
+    <%- include("./components/Header.ejs") %>
+    <section class="content">
+        <h1>Your Cart</h1>
+        <section class="items">
+            <%- include("./components/CartItem.ejs") %>
+        </section>
+        <section class="bottom">
+            <h2>Total: $119.98</h2>
+            <p>Login to proccess and purchase the items.</p>
+        </section>
+    </section>
+</body>
+</html>

@@ -1,0 +1,14 @@
+.cartPage{
+    color: white;
+    background-color: #211F1D; 
+}
+.cartPage .content{
+    width: 70%;
+    margin: auto;
+    margin-top: 50px;
+}
+.cartPage .content .bottom{ 
+    display: flex;
+    justify-content: space-between;
+    color: #BF8B45;
+}
