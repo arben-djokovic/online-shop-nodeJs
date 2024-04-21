@@ -15,7 +15,11 @@
         </section>
         <section class="bottom">
             <h2>Total: $119.98</h2>
-            <p>Login to proccess and purchase the items.</p>
+            <% if(user){%>
+                <form action="/buy" method="POST"><button>Buy products</button></form>
+            <% }else {%>
+                <p>Login to proccess and purchase the items.</p>
+            <% } %>
         </section>
     </section>
 </body>

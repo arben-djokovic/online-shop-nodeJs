@@ -1,9 +1,9 @@
 .productItem{
     background-color: #1D1A19;
-    width: 160px;
+    width: 200px;
 }
 .productItem img {
-    width: 160px;
+    width: 100%;
     height: 100px;
 }
 .productItem .text {
@@ -17,4 +17,10 @@
     border-radius: 5px;
     padding: 4px 7px;
     cursor: pointer;
+    margin: 5px;
+}
+.productItem .text .adminBtns{
+    display: flex;
+    text-align: center;
+    margin-top: 10px;
 }

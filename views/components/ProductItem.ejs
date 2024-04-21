@@ -5,6 +5,13 @@
     <img src="https://buffer.com/library/content/images/size/w1200/2023/10/free-images.jpg" alt="image1">
     <div class="text">
         <h3 class="title">Magic camera</h3>
-        <a href="/products/1" class="viewBtn">View Details</a>
+        <% if(user && user.isAdmin){%>
+            <form action="/delete-product/1" method="POST" class="adminBtns">
+                <a href="/edit-product/1" class="viewBtn">View and Edit</a>
+                <button class="viewBtn">Delete</button>
+            </form>
+        <% } else{ %>
+            <a href="/products/1" class="viewBtn">View Details</a>
+        <% } %>
     </div>
 </div>

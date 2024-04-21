@@ -4,7 +4,6 @@
     justify-content: space-between;
     padding: 20px;
     border-radius: 10px;
-    align-items: center;
 }
 .orderItem .left .lf-up span{
     color: #BF8B45;
@@ -16,4 +15,15 @@
     padding: 10px 30px;
     cursor: pointer;
     color: white;
+}
+.orderItem .left select{
+    padding: 10px;
+}
+.orderItem .left .updateBtn{
+    background-color: unset;
+    border: 1px solid #BF8B45;
+    color: #BF8B45;
+    border-radius: 5px;
+    padding: 10px;
+    cursor: pointer;
 }

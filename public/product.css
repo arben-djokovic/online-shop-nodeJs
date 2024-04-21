@@ -15,13 +15,14 @@
     background-color: #1D1A19;
     padding: 20px;
     display: flex;
+    grid-gap: 10px;
 }
 .productPage .preductSection .up .left{
     width: 50%;
 }
 .productPage .preductSection .up .left img{
     height: 400px;
-
+    width: 100%;
 }
 .productPage .preductSection .up .right button{
     background-color: #C97E24;

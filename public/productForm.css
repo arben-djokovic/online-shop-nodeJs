@@ -1,0 +1,29 @@
+.product-from{
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+
+}
+.product-from input{
+    width: 100%;
+    padding: 10px;
+}
+.product-from .btn{
+    margin-top: 30px;
+    margin-right: auto;
+    background-color: #C97E24;
+    border: none;
+    border-radius: 5px;
+    padding: 10px 30px;
+    cursor: pointer;
+    color: white;
+}
+.product-from .previewImg{
+    display: flex;
+    grid-gap: 10px;
+    align-items: center;
+}
+.product-from .previewImg .previewImgItem{
+    height: 50px;
+    width: 50px;
+}

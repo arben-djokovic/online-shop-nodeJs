@@ -7,10 +7,10 @@
     <title>Document</title>
 </head>
 <body class="home">
-    <%- include("./components/Header.ejs") %>
+    <%- include("./components/Header.ejs", {user: user}) %>
     <section class="products">
         <h1>All products</h1>
-        <%- include("./components/ProductItem.ejs") %>
+        <%- include("./components/ProductItem.ejs", {user: user} ) %>
     </section>
 </body>
 </html>

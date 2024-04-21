@@ -1,0 +1,12 @@
+.manageOrdersPage{
+    color: white;
+    background-color: #211F1D; 
+}
+.manageOrders{
+    width: 70%;
+    margin: auto;
+    display: flex;
+    flex-direction: column;
+    grid-gap: 20px;
+    margin-top: 50px;
+}

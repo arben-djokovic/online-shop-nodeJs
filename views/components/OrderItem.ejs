@@ -11,6 +11,16 @@
                 <li>Magic Camera - $264.99 ($59.99 x 4)</li>
             </ul>
         </p>
+        <% if(user && user.isAdmin){%>
+        <form class="adminOrder" action="/update-order/1" method="POST">
+            <select name="status" id="status">
+                <option value="pending">Pending</option>
+                <option value="fulfilled">Fulfilled</option>
+                <option value="canceled">Canceled</option>
+            </select>
+            <button class="updateBtn">Update</button>
+        </form>
+        <% } %>
     </div>
     <div class="right">
         <button>PENDING</button>
