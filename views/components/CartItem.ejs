@@ -3,11 +3,13 @@
 </head>
 <div class="cartItem">
     <div class="left">
-        <h3>Magic Camera</h3>
-        <p class="price">$160 <span>($80)</span></p>
+        <h3><%= product && product.title %></h3>
+        <p class="price">$160 <span><%= product && product.price %></span></p>
     </div>
     <div class="right">
-        <input type="number" value="2">
-        <form action="/update"><button>Update</button></form>
+        <form action="/update-quantity/<%= product && product.id %>" method="POST">
+            <input type="number" value="<%= product && product.quantity %>" name="quantity">
+            <button>Update</button>
+        </form>
     </div>
 </div>

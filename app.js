@@ -10,6 +10,7 @@ const User = require("./models/User");
 const Product = require("./models/Product");
 const bcrypt = require("bcrypt")
 const multer  = require('multer');
+const { ObjectId } = require('mongodb');
 
 const storage = multer.diskStorage({
     destination: function (req, file, cb) {
@@ -65,7 +66,24 @@ app.get("/products/:id", async(req, res) => {
 app.get("/cart", async(req, res) => {
     const filePath = path.join(__dirname, 'views', 'Cart')
     const user = await jwt.decode(req.cookies.token, secretKey)
-    res.render(filePath, {user: user})
+    let cartItems = []
+    if(req.cookies.cartItems){
+        const result = await Product.getByIds(req.cookies.cartItems)
+        result.forEach(element => {
+            req.cookies.cartItems.forEach(element2 => {
+                if(element._id == element2.id){
+                    cartItems.push({
+                        ...element,
+                        ...element2
+                    })
+                }
+            });
+        });
+    }else{
+        cartItems = []
+    }
+    console.log(cartItems)
+    res.render(filePath, {user: user, products: cartItems})
 })
 app.get("/singup", async(req, res) => {
     const filePath = path.join(__dirname, 'views', 'Singup')
@@ -156,7 +174,7 @@ app.post("/update-product/:id", async(req, res) => {
 app.get("/add-product",adminRoutes, async(req, res) => {
     const filePath = path.join(__dirname, 'views', 'AddProduct')
     const user = await jwt.decode(req.cookies.token, secretKey)
-    res.render(filePath, {user: user})
+    res.render(filePath, {user: user, product: null})
 })
 app.get("/manage-orders",adminRoutes, async(req, res) => {
     const filePath = path.join(__dirname, 'views', 'ManageOrders')
@@ -188,6 +206,27 @@ app.post("/delete-product/:id", async(req, res) => {
         console.log(err)
         return res.redirect("/")
     }
+})
+app.post("/add-product-cart/:id", async(req, res) => {
+    let cartItems
+    if(!req.cookies.cartItems){
+        res.cookie("cartItems", [{id: req.params.id, quantity: 1}])
+    }else{
+        cartItems = req.cookies.cartItems
+        await cartItems.push({id: req.params.id, quantity: 1})
+        res.cookie("cartItems", cartItems)
+    }
+    res.redirect("/cart")
+})
+app.post("/update-quantity/:id", async(req, res) => {
+    let cartItems = req.cookies.cartItems
+    await cartItems.forEach(element => {
+        if(element.id == req.params.id){
+            element.quantity = req.body.quantity
+        } 
+    });
+    res.cookie("cartItems", cartItems)
+    res.redirect("/cart")
 })
 db.connection().then(() => {
     app.listen(3000)

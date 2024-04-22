@@ -4,26 +4,28 @@
 <form class="product-from" action="<%= action %>" method="POST" enctype="multipart/form-data">
     <div class="input">
         <p>Title</p>
-        <input type="text" name="title" value="<%= product && product.title%>"> 
+        <input type="text" name="title" value="<%= product && product.title%>" required> 
     </div>
     <div class="input">
         <p>Image (max 3)</p>
         <input type="file" id="imageInput" accept="image/jpeg, image/png" name="image">
         <div class="previewImg">
-            <img class="previewImgItem" src="/<%= product && product.image%>" alt="">
+            <% if(product && product.image){ %>
+            <img class="previewImgItem" src="/<%= product.image %>" alt="">
+            <% } %>
         </div>
     </div>
     <div class="input">
         <p>Summary</p>
-        <input type="text" name="summary" value="<%= product && product.summary%>">
+        <input type="text" name="summary" value="<%= product && product.summary%>" required>
     </div>
     <div class="input">
         <p>Price</p>
-        <input type="number" name="price" value="<%= product && product.price%>">
+        <input type="number" name="price" step="any" value="<%= product && product.price%>" required>
     </div>
     <div class="input">
         <p>Description</p>
-        <input type="text" name="desc" value="<%= product && product.desc%>">
+        <input type="text" name="desc" value="<%= product && product.desc%>" required>
     </div>
     <button class="btn"><%= btnTitle %></button>
 </form>

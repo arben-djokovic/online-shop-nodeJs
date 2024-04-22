@@ -11,7 +11,11 @@
     <section class="preductSection">
         <div class="up">
             <div class="left">
-                <img src="/<%= product.image %>" alt="image1">
+                <% if(product && product.image){ %>
+                    <img src="/<%= product.image %>" alt="image1">
+                <% } else{ %>
+                    <img src="https://upload.wikimedia.org/wikipedia/commons/1/14/No_Image_Available.jpg" alt="no image found">
+                <% } %>
             </div>
             <div class="right">
                 <h1 class="title"><%= product.title %></h1>

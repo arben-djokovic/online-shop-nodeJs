@@ -1,5 +1,5 @@
 const db = require('../data/database');
-const { MongoClient, ObjectId } = require('mongodb');
+const { ObjectId } = require('mongodb');
 class Product{
     constructor(name, summary, price, image, desc){
         this.name = name,
@@ -61,6 +61,15 @@ class Product{
             return true
         }catch(err){
             return {error: "Cannot update product"}
+        }
+    }
+    static async getByIds(ids){
+        let objectIds = ids.map(id => new ObjectId(id))
+        try{
+            const result = await db.getDb().collection("products").find({_id: {$in: objectIds}}).toArray()
+            return result
+        }catch(err){
+            return {error: "Cannot find product"}
         }
     }
 }
