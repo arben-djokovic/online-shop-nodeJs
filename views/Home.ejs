@@ -10,7 +10,9 @@
     <%- include("./components/Header.ejs", {user: user}) %>
     <section class="products">
         <h1>All products</h1>
-        <%- include("./components/ProductItem.ejs", {user: user} ) %>
+        <% products.forEach(element => {
+            %><%-include("./components/ProductItem.ejs", {user: user, product: element} ) %>
+        <% }); %>
     </section>
 </body>
 </html>

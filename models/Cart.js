@@ -1,4 +1,4 @@
-class Order{
+class Cart{
     constructor(items){
         this.items = items,
         this.totalPrice = 0,

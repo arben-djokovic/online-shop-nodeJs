@@ -13,7 +13,9 @@
         <h2>Manage products</h2>
         <a href="/add-product" class="addProductBtn">Add product</a>
         <section class="products">
-            <%- include("./components/ProductItem.ejs") %>
+            <%  products.forEach(element => {%>
+                <%- include("./components/ProductItem.ejs", {product: element}) %>
+            <% }); %>
         </section>
     </section>
 </body>

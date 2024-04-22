@@ -2,16 +2,16 @@
     <link rel="stylesheet" href="/ProductItem.css">
 </head>
 <div class="productItem">
-    <img src="https://buffer.com/library/content/images/size/w1200/2023/10/free-images.jpg" alt="image1">
+    <img src="/<%= product && product.image %>" alt="image1">
     <div class="text">
-        <h3 class="title">Magic camera</h3>
+        <h3 class="title"><%= product &&  product.title %></h3>
         <% if(user && user.isAdmin){%>
-            <form action="/delete-product/1" method="POST" class="adminBtns">
-                <a href="/edit-product/1" class="viewBtn">View and Edit</a>
+            <form action="/delete-product/<%= product && product._id%>" method="POST" class="adminBtns">
+                <a href="/edit-product/<%=  product && product._id %>" class="viewBtn">View and Edit</a>
                 <button class="viewBtn">Delete</button>
             </form>
         <% } else{ %>
-            <a href="/products/1" class="viewBtn">View Details</a>
+            <a href="/products/<%=  product && product._id %>" class="viewBtn">View Details</a>
         <% } %>
     </div>
-</div>
+</div> 

@@ -1,6 +1,8 @@
 .productItem{
     background-color: #1D1A19;
     width: 200px;
+    display: inline-block;
+    margin: 10px;
 }
 .productItem img {
     width: 100%;

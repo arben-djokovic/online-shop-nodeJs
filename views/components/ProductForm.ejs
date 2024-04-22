@@ -1,48 +1,52 @@
 <head>
     <link rel="stylesheet" href="/productForm.css">
 </head>
-<form class="product-from" action="<%= action %>" method="POST">
+<form class="product-from" action="<%= action %>" method="POST" enctype="multipart/form-data">
     <div class="input">
         <p>Title</p>
-        <input type="text" name="title">
+        <input type="text" name="title" value="<%= product && product.title%>"> 
     </div>
     <div class="input">
         <p>Image (max 3)</p>
-        <input type="file" multiple id="imageInput" accept="image/jpeg, image/png" name="image">
-        <div class="previewImg"></div>
+        <input type="file" id="imageInput" accept="image/jpeg, image/png" name="image">
+        <div class="previewImg">
+            <img class="previewImgItem" src="/<%= product && product.image%>" alt="">
+        </div>
     </div>
     <div class="input">
         <p>Summary</p>
-        <input type="text" name="summary">
+        <input type="text" name="summary" value="<%= product && product.summary%>">
     </div>
     <div class="input">
         <p>Price</p>
-        <input type="number" name="price">
+        <input type="number" name="price" value="<%= product && product.price%>">
     </div>
     <div class="input">
         <p>Description</p>
-        <input type="text" name="desc">
+        <input type="text" name="desc" value="<%= product && product.desc%>">
     </div>
     <button class="btn"><%= btnTitle %></button>
 </form>
 
 <script>
-    const imageInput = document.querySelector("#imageInput")
-    const preview = document.querySelector(".previewImg")
+    const imageInput = document.querySelector("#imageInput");
+    const preview = document.querySelector(".previewImg");
+
     imageInput.addEventListener("change", (e) => {
-            const files = Array.from(e.target.files).slice(0, 3);
-            preview.innerHTML = "";
-            for (const file of files) {
-                const reader = new FileReader();
+        const files = e.target.files;
+        preview.innerHTML = "";
+        
+        for (let i = 0; i < files.length; i++) {
+            const reader = new FileReader();
 
-                reader.onload = () => {
-                    const imgElement = document.createElement("img");
-                    imgElement.src = reader.result;
-                    imgElement.classList.add("previewImgItem");
-                    preview.appendChild(imgElement);
-                };
+            reader.onload = () => {
+                const imgElement = document.createElement("img");
+                imgElement.src = reader.result;
+                imgElement.classList.add("previewImgItem");
+                preview.appendChild(imgElement);
+            };
 
-                reader.readAsDataURL(file);
-            }
-        })
+            reader.readAsDataURL(files[i]);
+        }
+    });
 </script>
