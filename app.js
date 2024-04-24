@@ -9,8 +9,12 @@ const Order = require("./models/Order");
 const Product = require("./models/Product");
 const multer  = require('multer');
 const { ObjectId } = require('mongodb');
+
 const authRoutes = require("./routes/Auth-routes");
 const productsRoutes = require("./routes/Product-routes");
+const cartRoutes = require("./routes/Cart-routes");
+const orderRoutes = require("./routes/Order-routes");
+const { adminRoutes } = require("./middleware/middlewares");
 
 const storage = multer.diskStorage({
     destination: function (req, file, cb) {
@@ -40,168 +44,12 @@ app.use('/uploads', express.static(path.join(__dirname, 'uploads')));
 
 app.use(upload.single('image'));
 
-const adminRoutes = async(req, res, next) => {
-    const user = await jwt.decode(req.cookies.token, secretKey)
-    if(!user || !user.isAdmin){
-        return res.redirect("/")
-    }
-    next()
-}
-
 app.use(authRoutes)
 app.use(productsRoutes)
+app.use(cartRoutes)
+app.use(orderRoutes)
 
-app.get("/cart", async(req, res) => {
-    const filePath = path.join(__dirname, 'views', 'Cart')
-    const user = await jwt.decode(req.cookies.token, secretKey)
-    let cartItems = []
-    let totalCartPrice = 0
-    if(req.cookies.cartItems){
-        const result = await Product.getByIds(req.cookies.cartItems)
-        result.forEach(element => {
-            req.cookies.cartItems.forEach(element2 => {
-                if(element._id == element2.id){
-                    totalCartPrice += (element.price * element2.quantity)
-                    cartItems.push({
-                        ...element,
-                        ...element2,
-                        totalPrice: element.price * element2.quantity
-                    })
-                }
-            });
-        });
-    }else{
-        cartItems = []
-    }
-    res.render(filePath, {user: user, products: cartItems, totalCartPrice: totalCartPrice})
-})
-app.get("/orders", async(req, res) => {
-    const filePath = path.join(__dirname, 'views', 'Orders')
-    const user = jwt.decode(req.cookies.token, secretKey)
-    const result = await Order.getOrdersByUserId(user.id)
-    res.render(filePath, {user: user, orders: result})
-})
-app.get("/manage-products",adminRoutes, async(req, res) => {
-    const filePath = path.join(__dirname, 'views', 'Manage-products')
-    const user = await jwt.decode(req.cookies.token, secretKey)
-    const result = await Product.getAllProducts()
-    if(result.error){
-        return res.redirect('/')
-    }
-    res.render(filePath, {user: user, products: result})
-})
-app.get("/edit-product/:id",adminRoutes, async(req, res) => {
-    const filePath = path.join(__dirname, 'views', 'UpdateProduct')
-    const user = await jwt.decode(req.cookies.token, secretKey)
-    const product = await Product.getById(req.params.id)
-    res.render(filePath, {user: user, product: product})
-})
-app.post("/update-product/:id", async(req, res) => {
-    const product = await Product.getById(req.params.id)
-    const result = await Product.updateProduct({
-        _id: req.params.id,
-        title: req.body.title,
-        summary: req.body.summary,
-        price: req.body.price,
-        image: req.file ? req.file.path : product.image,
-        desc: req.body.desc
-    })
-    if(result.error){
-        return res.redirect("/")
-    }
-    res.redirect("/")
-})
-app.get("/add-product",adminRoutes, async(req, res) => {
-    const filePath = path.join(__dirname, 'views', 'AddProduct')
-    const user = await jwt.decode(req.cookies.token, secretKey)
-    res.render(filePath, {user: user, product: null})
-})
-app.get("/manage-orders",adminRoutes, async(req, res) => {
-    const filePath = path.join(__dirname, 'views', 'ManageOrders')
-    const user = await jwt.decode(req.cookies.token, secretKey)
-    const result = await Order.getAllOrders()
-    res.render(filePath, {user: user, orders: result})
-})
-app.post("/add-product", async(req, res) => {
-    const newProduct = {
-        title: req.body.title,
-        image: req.file ? req.file.path : null, 
-        summary: req.body.summary,
-        price: req.body.price,
-        desc: req.body.desc
-    };
-    const result = await Product.addProduct(newProduct)
-    res.redirect("/add-product")
-})
-app.post("/delete-product/:id", async(req, res) => {
-    try{
-        const result = await Product.deleteById(req.params.id)
-        if(result.error){
-            console.log(result)
-            return res.redirect("/")
-        }
-        res.redirect("/manage-products")
-    }catch(err){
-        console.log(err)
-        return res.redirect("/")
-    }
-})
-app.post("/add-product-cart/:id", async(req, res) => {
-    let cartItems
-    if(!req.cookies.cartItems){
-        res.cookie("cartItems", [{id: req.params.id, quantity: 1}])
-    }else{
-        cartItems = req.cookies.cartItems
-        await cartItems.push({id: req.params.id, quantity: 1})
-        res.cookie("cartItems", cartItems)
-    }
-    res.redirect("/cart")
-})
-app.post("/update-quantity/:id", async(req, res) => {
-    let cartItems = req.cookies.cartItems
-    await cartItems.forEach(element => {
-        if(element.id == req.params.id){
-            element.quantity = req.body.quantity
-        } 
-    });
-    res.cookie("cartItems", cartItems)
-    res.redirect("/cart")
-})
-app.post("/buy", async(req, res) => {
-    const products = JSON.parse(req.body.products);
-    let productsOrder = []
-    let totalOrderPrice = 0
-    products.forEach(element => {
-        totalOrderPrice += (element.price * element.quantity)
-        productsOrder.push({
-            id: new ObjectId(element.id) || new ObjectId(element._id),
-            quantity: element.quantity
-        })
-    }); 
-    const user = jwt.decode(req.cookies.token, secretKey)
-    const newOrder = {
-        user_id: new ObjectId(user.id),
-        products: productsOrder,
-        status: 'PENDING',
-        date: new Date(),
-        totalOrderPrice: totalOrderPrice
-    }
-    try{
-        const result = await db.getDb().collection('orders').insertOne(newOrder)
-        res.clearCookie("cartItems")    
-        return res.redirect("/orders")
-    }catch(err){
-        console.log(err)
-    }
-    res.redirect("/cart")
-})
-app.post("/update-order", async(req, res)=> {
-    const id = JSON.parse(req.body.orderid)
-    const status = req.body.status
-    console.log(status)
-    const result = await Order.updateStatus(id, status)
-    res.redirect("/manage-orders")
-})
+
 db.connection().then(() => {
     app.listen(3000)
 })
