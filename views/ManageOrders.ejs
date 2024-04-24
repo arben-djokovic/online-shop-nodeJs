@@ -9,9 +9,11 @@
 <body class="manageOrdersPage">
     <%- include("./components/Header.ejs") %>
     <section class="manageOrders">
-        <%- include("./components/OrderItem.ejs") %>
-        <%- include("./components/OrderItem.ejs") %>
-        <%- include("./components/OrderItem.ejs") %>
+        <%if(orders && orders.length > 0){
+            orders.forEach(order => {%>
+                <%- include("./components/OrderItem.ejs", {order: order}) %>
+            <%});    
+        } %>
     </section>
 </body>
 </html>

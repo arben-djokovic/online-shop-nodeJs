@@ -36,6 +36,7 @@ class User{
                 address: user.address})
             const token = await jwt.sign({ name: user.name,
                 email: user.email,
+                id: user.id || user._id,
                 isAdmin: user.isAdmin,
                 address: user.address}, secretKey)
             return token

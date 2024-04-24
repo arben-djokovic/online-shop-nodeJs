@@ -4,25 +4,33 @@
 <div class="orderItem">
     <div class="left">
         <p class="lf-up">
-          <span>$264.99</span> - Thu, August 19, 2024
+          <span>$<%=order && order.totalOrderPrice%></span> - <%= order && order.date %>
         </p>
         <p class="lf-dw">
             <ul>
-                <li>Magic Camera - $264.99 ($59.99 x 4)</li>
+                <%if(order && order.products.length > 0){
+                    order.products.forEach(element => {
+                        const total = Number(element.price) * Number(element.quantity)
+                        %>
+                        <li><%=element.title%> - $<%=total%> ($<%=element.price%> x <%=element.quantity%>)</li>
+                    <%})
+                } %>
             </ul>
         </p>
         <% if(user && user.isAdmin){%>
-        <form class="adminOrder" action="/update-order/1" method="POST">
+        <form class="adminOrder" action="/update-order" method="POST">
+            <input type="hidden" name="orderid" value="<%= JSON.stringify(order._id) %>">
+            
             <select name="status" id="status">
-                <option value="pending">Pending</option>
-                <option value="fulfilled">Fulfilled</option>
-                <option value="canceled">Canceled</option>
+                <option id="PENDING" name="PENDING" value="PENDING" <%= order.status === "PENDING" ? 'selected' : '' %>>PENDING</option>
+                <option id="FULFILLED" name="FULFILLED" value="FULFILLED" <%= order.status === "FULFILLED" ? 'selected' : ''%>>FULFILLED</option>
+                <option id="CANCELED" name="CANCELED" value="CANCELED" <%= order.status === "CANCELED" ? 'selected' : ''%>>CANCELED</option>
             </select>
             <button class="updateBtn">Update</button>
         </form>
         <% } %>
     </div>
     <div class="right">
-        <button>PENDING</button>
+        <button><%= order.status %></button>
     </div>
 </div>

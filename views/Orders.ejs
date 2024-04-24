@@ -10,7 +10,11 @@
     <%- include("./components/Header.ejs") %>
     <section class="orders">
         <h1>All Your Orders</h1>
-        <%- include("./components/OrderItem") %>
+        <%if(orders && orders.length > 0){
+            orders.forEach(element => {%>
+                <%- include("./components/OrderItem", {order: element}) %>
+            <%}); 
+        } %>
     </section>
 </body>
 </html>

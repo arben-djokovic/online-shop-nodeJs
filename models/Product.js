@@ -34,7 +34,6 @@ class Product{
     static async deleteById(id){
         try{
             const result = await db.getDb().collection("products").deleteOne({_id: new ObjectId(id)})
-            console.log(result)
             return true
         }catch(err){
             return {error: "Cannot delete product"}
@@ -43,7 +42,6 @@ class Product{
     static async getById(id){
         try{
             const result = await db.getDb().collection("products").find({_id: new ObjectId(id)}).toArray()
-            console.log(result)
             return result[0]
         }catch(err){
             return {error: "Cannot find product"}

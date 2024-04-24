@@ -4,7 +4,7 @@
 <div class="cartItem">
     <div class="left">
         <h3><%= product && product.title %></h3>
-        <p class="price">$160 <span><%= product && product.price %></span></p>
+        <p class="price">$<%= product && product.totalPrice %>  <span>($<%= product && product.price %> )</span></p>
     </div>
     <div class="right">
         <form action="/update-quantity/<%= product && product.id %>" method="POST">
