@@ -26,6 +26,7 @@ class Order{
         }
     }
     static async getOrdersByUserId(user_id){
+        console.log(user_id)
         try{    
             const orders = await db.getDb().collection("orders").aggregate([
                 {

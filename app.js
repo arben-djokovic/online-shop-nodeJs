@@ -4,14 +4,13 @@ require('dotenv').config();
 var bodyParser = require('body-parser');
 var jwt = require('jsonwebtoken');
 const cookieParser = require('cookie-parser');
-const { body, validationResult } = require('express-validator');
 const db = require('./data/database') 
-const User = require("./models/User");
 const Order = require("./models/Order");
 const Product = require("./models/Product");
-const bcrypt = require("bcrypt")
 const multer  = require('multer');
 const { ObjectId } = require('mongodb');
+const authRoutes = require("./routes/Auth-routes");
+const productsRoutes = require("./routes/Product-routes");
 
 const storage = multer.diskStorage({
     destination: function (req, file, cb) {
@@ -49,21 +48,9 @@ const adminRoutes = async(req, res, next) => {
     next()
 }
 
-app.get("/", async(req, res) => {
-    const filePath = path.join(__dirname, 'views', 'Home')
-    const user = await jwt.decode(req.cookies.token, secretKey)
-    const result = await Product.getAllProducts()
-    if(result.error){
-        return res.redirect('/')
-    }
-    res.render(filePath, {user: user, products: result})
-})
-app.get("/products/:id", async(req, res) => {
-    const filePath = path.join(__dirname, 'views', 'Product')
-    const user = await jwt.decode(req.cookies.token, secretKey)
-    const product = await Product.getById(req.params.id)
-    res.render(filePath, {user: user, product: product})
-})
+app.use(authRoutes)
+app.use(productsRoutes)
+
 app.get("/cart", async(req, res) => {
     const filePath = path.join(__dirname, 'views', 'Cart')
     const user = await jwt.decode(req.cookies.token, secretKey)
@@ -88,61 +75,9 @@ app.get("/cart", async(req, res) => {
     }
     res.render(filePath, {user: user, products: cartItems, totalCartPrice: totalCartPrice})
 })
-app.get("/singup", async(req, res) => {
-    const filePath = path.join(__dirname, 'views', 'Singup')
-    const user = await jwt.decode(req.cookies.token, secretKey)
-    res.render(filePath, {user: user})
-})
-app.post("/singup", async(req, res) => {
-    try{
-        const result = await User.singup({
-            name: req.body.name,
-            email: req.body.email,
-            password: bcrypt.hashSync(req.body.password, 12),
-            isAdmin: false,
-            address: req.body.street})
-            if(result.error){
-                return res.redirect('/singup')
-            }
-        res.cookie("token", result)
-        return res.redirect('/')
-    }catch(err){
-        console.log(err)
-    }
-    res.redirect('/singup')
-})
-app.get("/login", async(req, res) => {
-    const filePath = path.join(__dirname, 'views', 'Login')
-    const user = await jwt.decode(req.cookies.token, secretKey)
-    res.render(filePath, {user: user})
-})
-app.post("/login", async(req, res) => {
-    try{
-        const result = await User.login(req.body.email, req.body.password)
-        if(result.error){
-            console.log(result.error)
-            return res.redirect('/login')
-        }
-        const token = await jwt.sign({
-            name: result.data.name,
-            id: result.data.id || result.data._id,
-            email: result.data.email,
-            isAdmin: result.data.isAdmin,
-            address: result.data.address
-        }, secretKey);
-        res.cookie('token', token)
-        res.redirect("/")
-    }catch(err){
-        console.log(err)
-    }
-})
-app.post('/logout', (req, res) => {
-    res.clearCookie('token')
-    res.redirect('/')
-})
 app.get("/orders", async(req, res) => {
     const filePath = path.join(__dirname, 'views', 'Orders')
-    const user = await jwt.decode(req.cookies.token, secretKey)
+    const user = jwt.decode(req.cookies.token, secretKey)
     const result = await Order.getOrdersByUserId(user.id)
     res.render(filePath, {user: user, orders: result})
 })
