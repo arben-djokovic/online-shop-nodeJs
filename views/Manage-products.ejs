@@ -13,9 +13,12 @@
         <h2>Manage products</h2>
         <a href="/add-product" class="addProductBtn">Add product</a>
         <section class="products">
-            <%  products.forEach(element => {%>
+            <% if(products && products.length > 0){ 
+                products.forEach(element => {%>
                 <%- include("./components/ProductItem.ejs", {product: element}) %>
-            <% }); %>
+            <% })}else{
+            %> <h1>No product found!!</h1> <%
+            } %>
         </section>
     </section>
 </body>

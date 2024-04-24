@@ -9,11 +9,13 @@
 <body class="ordersPage">
     <%- include("./components/Header.ejs") %>
     <section class="orders">
-        <h1>All Your Orders</h1>
         <%if(orders && orders.length > 0){
+            %><h1>All Your Orders</h1><%
             orders.forEach(element => {%>
                 <%- include("./components/OrderItem", {order: element}) %>
             <%}); 
+        }else{
+            %><h1>No orders, make one now :)</h1><%
         } %>
     </section>
 </body>

@@ -9,10 +9,13 @@
 <body class="home">
     <%- include("./components/Header.ejs", {user: user}) %>
     <section class="products">
-        <h1>All products</h1>
-        <% products.forEach(element => {
+        <% if(products && products.length > 0){ 
+            %><h1>All products</h1><%
+            products.forEach(element => {
             %><%-include("./components/ProductItem.ejs", {user: user, product: element} ) %>
-        <% }); %>
+        <% })}else{
+            %> <h1>No product found!!</h1> <%
+        } %>
     </section>
 </body>
 </html>

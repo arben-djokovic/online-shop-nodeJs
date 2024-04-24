@@ -5,11 +5,15 @@ const Product = require('../models/Product');
 const secretKey = process.env.SECRET_KEY;
 
 async function postAddProductToCart(req, res) {
-    let cartItems
+    let cartItems = []
     if(!req.cookies.cartItems){
         res.cookie("cartItems", [{id: req.params.id, quantity: 1}])
     }else{
         cartItems = req.cookies.cartItems
+        const isIncluded = cartItems.filter(el => el.id == req.params.id)
+        if(isIncluded.length > 0){
+            return res.redirect("/cart")
+        }
         await cartItems.push({id: req.params.id, quantity: 1})
         res.cookie("cartItems", cartItems)
     }
@@ -17,11 +21,15 @@ async function postAddProductToCart(req, res) {
 }
 async function postUpdateQuantity (req, res) {
     let cartItems = req.cookies.cartItems
-    await cartItems.forEach(element => {
-        if(element.id == req.params.id){
-            element.quantity = req.body.quantity
-        } 
-    });
+    if(req.body.quantity == 0){
+        cartItems = cartItems.filter(el => el.id != req.params.id)
+    }else{
+        await cartItems.forEach(element => {
+            if(element.id == req.params.id){
+                element.quantity = req.body.quantity
+            } 
+        });
+    }
     res.cookie("cartItems", cartItems)
     res.redirect("/cart")
 }

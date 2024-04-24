@@ -13,6 +13,8 @@
             orders.forEach(order => {%>
                 <%- include("./components/OrderItem.ejs", {order: order}) %>
             <%});    
+        }else{
+            %> <h1>No orders found!!</h1> <%
         } %>
     </section>
 </body>
