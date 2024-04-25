@@ -31,5 +31,9 @@ const clearAuthFormCookies = (res) => {
   res.clearCookie('loginInputs')
   res.clearCookie('loginInputErrors')
 }
+const productValidationRules = [
+  body('title').isLength({min: 2}).withMessage("Unesite pravilno naslov proizvoda"),
+  body('price').isNumeric().withMessage("Unesite ispravno cijenu proizvoda")
+]
 
-module.exports = { adminRoutes, loginValidationRules, singupValidationRules, clearAuthFormCookies };
+module.exports = { adminRoutes, loginValidationRules, singupValidationRules,productValidationRules, clearAuthFormCookies };

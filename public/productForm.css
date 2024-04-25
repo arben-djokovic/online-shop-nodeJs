@@ -8,6 +8,12 @@
     width: 100%;
     padding: 10px;
 }
+.product-from .inputError{
+    background-color: rgba(245, 120, 120, 0.772);
+    border: 1px solid red;
+    padding: 5px;
+    border-radius: 5px;
+}
 .product-from .btn{
     margin-top: 30px;
     margin-right: auto;

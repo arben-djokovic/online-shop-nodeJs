@@ -10,10 +10,13 @@
     <%- include("./components/Header.ejs", {user: user}) %>
     <section class="products">
         <% if(products && products.length > 0){ 
-            %><h1>All products</h1><%
+            %><h1>All products</h1>
+            <section class="productsList">
+                <%
             products.forEach(element => {
             %><%-include("./components/ProductItem.ejs", {user: user, product: element} ) %>
-        <% })}else{
+                
+        <% }) %></section><%}else{
             %> <h1>No product found!!</h1> <%
         } %>
     </section>

@@ -10,7 +10,7 @@
     <%- include("./components/Header.ejs") %>
     <section class="formProduct">
         <h1>Add new product</h1>
-        <%- include("./components/ProductForm.ejs", {btnTitle: 'Add', action: '/add-product', product: product}) %>
+        <%- include("./components/ProductForm.ejs", {btnTitle: 'Add', action: '/add-product', product: product, errors: errors}) %>
     </section>
 </body>
 </html>
