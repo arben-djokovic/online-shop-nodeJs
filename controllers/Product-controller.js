@@ -3,7 +3,6 @@ var jwt = require('jsonwebtoken');
 const path = require('path')
 const secretKey = process.env.SECRET_KEY;
 const Product = require("../models/Product");
-const bcrypt = require("bcrypt");
 
 
 async function getProductContr(req, res){

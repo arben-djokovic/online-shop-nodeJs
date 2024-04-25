@@ -16,18 +16,23 @@ class User{
         try{
             const result = await db.getDb().collection("users").find({email: email}).toArray()
             if(result.length == 0){
-                return { error: "Korisnik nije pronadjen"}
+                return {error: [{msg: "Korisnik ne postoji"}]}
             }
             if(bcrypt.compareSync(password, result[0].password)){
                 return this.generateToken(result[0])
-            }
-            return { error: "Pogresne informacije"}
-        }catch(err){
-            return { error: "Greska u prijavljivanju"}
+            }            
+            return {error: [{msg: "Pogresne informacije"}]}
+
+        }catch(err){            
+            return {error: [{msg: "Greska u prijavljivanju"}]}
         }
     }
     static async singup(user){
         try{
+            const doExist = await db.getDb().collection("users").find({email: user.email}).toArray()
+            if(doExist.length > 0){
+                return {error: [{msg: "Korisnik vec postoji"}]}
+            }
             const result = await db.getDb().collection("users").insertOne({
                 name: user.name,
                 email: user.email,
@@ -36,7 +41,7 @@ class User{
                 address: user.address})
             return this.generateToken({...user, id: result.insertedId})
         }catch(err){
-            return { error: "Greska u prijavljivanju"}
+            return { error: [{msg: "Greska u prijavljivanju"}]}
         }
     }
     static async generateToken(user){

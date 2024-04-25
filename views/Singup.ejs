@@ -13,6 +13,7 @@
         <%- include("./components/form", {
             method: 'POST',
             action: '/singup',
+            errors: singupInputErrors || [],
             links: [
                 {
                     text: 'Login insted',
@@ -32,35 +33,40 @@
                     placeholder: '',
                     value: '',
                     name: 'email',
-                    text: 'E-mail'
+                    text: 'E-mail',
+                    value: singupInput.email
                 },
                 {
                     type: 'mail',
                     placeholder: '',
                     value: '',
-                    name: 'conf-email',
-                    text: 'Confrim email'
+                    name: 'confemail',
+                    text: 'Confrim email',
+                    value: singupInput.confemail
                 },
                 {
                     type: 'password',
                     placeholder: '',
                     value: '',
                     name: 'password',
-                    text: 'Password'
+                    text: 'Password',
+                    value: ''
                 },
                 {
                     type: 'text',
                     placeholder: '',
                     value: '',
                     name: 'name',
-                    text: 'Full name'
+                    text: 'Full name',
+                    value: singupInput.name
                 },
                 {
                     type: 'text',
                     placeholder: '',
                     value: '',
                     name: 'street',
-                    text: 'Street'
+                    text: 'Street',
+                    value: singupInput.street
                 }
             ]
         }) %>

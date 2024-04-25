@@ -13,6 +13,7 @@
         <%- include("./components/form", {
             method: 'POST',
             action: '/login',
+            errors: loginInputErrors,
             links: [
                 {
                     text: 'Create new account',
@@ -32,14 +33,16 @@
                     placeholder: '',
                     value: '',
                     name: 'email',
-                    text: 'E-mail'
+                    text: 'E-mail',
+                    value: loginInput.email
                 },
                 {
                     type: 'password',
                     placeholder: '',
                     value: '',
                     name: 'password',
-                    text: 'Password'
+                    text: 'Password',
+                    value: ''
                 }
             ]
         }) %>

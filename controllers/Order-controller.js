@@ -1,7 +1,6 @@
 var jwt = require('jsonwebtoken');
 const path = require('path')
 const secretKey = process.env.SECRET_KEY;
-const bcrypt = require("bcrypt")
 const { ObjectId } = require('mongodb');
 const db = require('../data/database'); 
 const Order = require('../models/Order');

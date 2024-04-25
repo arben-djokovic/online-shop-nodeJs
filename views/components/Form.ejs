@@ -2,11 +2,14 @@
     <link rel="stylesheet" href="/form.css">
 </head>
 <form class="form" action="<%= action %>" method="<%= method %>">
+    <%if(errors.length > 0) {%>
+        <p class="inputError"><%= errors[0].msg %></p>
+    <% } %>
     <% inputs.forEach(input => {
         %>
         <div class="input">
             <p class="text"><%= input.text%></p>  
-            <input type="<%= input.type %>" name="<%= input.name %>" required>
+            <input type="<%= input.type %>" name="<%= input.name %>" value="<%= input.value || ''%>" required>
         </div>
         <%
     }); %>
