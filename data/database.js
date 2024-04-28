@@ -20,6 +20,7 @@ const connection = async() => {
 const getDb = () => {
     if(database){
         console.log("connected")
+        console.log(mongodbUrl)
         return database
     }
     console.log("not connected")

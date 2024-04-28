@@ -10,7 +10,7 @@
     <%- include("./components/Header.ejs") %>
     <section class="singup">
         <h1 class="title">Create New Account</h1>
-        <%- include("./components/form", {
+        <%- include("./components/Form", {
             method: 'POST',
             action: '/login',
             errors: loginInputErrors,
