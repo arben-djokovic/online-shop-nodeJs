@@ -1,9 +1,13 @@
 const { MongoClient } = require('mongodb');
 let database;
 
+let mongodbUrl = 'mongodb://0.0.0.0:27017'
+if(process.env.MONGODB_URL){
+    mongodbUrl = process.env.MONGODB_URL
+}
 const connection = async() => {
     try {
-        const client = new MongoClient('mongodb://0.0.0.0:27017');
+        const client = new MongoClient(mongodbUrl);
         await client.connect();
         database = client.db('online-shop');
     } catch(err) {
