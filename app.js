@@ -25,6 +25,11 @@ const storage = multer.diskStorage({
 const upload = multer({ storage: storage });
 const app = express()
 
+let PORT = 3000
+if(process.env.PORT){
+    PORT = process.env.PORT
+}
+
 app.use(express.static(path.join(__dirname, 'uploads')));
 
 app.use(express.urlencoded({extended: false}))
@@ -45,5 +50,5 @@ app.use(orderRoutes)
 
 
 db.connection().then(() => {
-    app.listen(3000)
+    app.listen(PORT)
 })

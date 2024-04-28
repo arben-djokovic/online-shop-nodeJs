@@ -13,6 +13,9 @@
     "nodemon": "^3.1.0",
     "path": "^0.12.7"
   },
+  "engines": {
+    "node": "18.x"
+  },
   "name": "online-shop-nodejs",
   "version": "1.0.0",
   "main": "app.js",
