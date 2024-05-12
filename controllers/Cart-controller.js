@@ -21,10 +21,11 @@ async function postAddProductToCart(req, res) {
 }
 async function postUpdateQuantity (req, res) {
     let cartItems = req.cookies.cartItems
+    if(!cartItems){return res.redirect("/cart")}
     if(req.body.quantity == 0){
         cartItems = cartItems.filter(el => el.id != req.params.id)
     }else{
-        await cartItems.forEach(element => {
+         cartItems.forEach(element => {
             if(element.id == req.params.id){
                 element.quantity = req.body.quantity
             } 
