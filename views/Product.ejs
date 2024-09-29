@@ -19,7 +19,7 @@
             </div>
             <div class="right">
                 <h1 class="title"><%= product.title %></h1>
-                <p class="price"><%= product.price %></p>
+                <p class="price">$<%= product.price %></p>
                 <form action="/add-product-cart/<%= product._id %>" method="POST">
                     <button class="addToCart">Add to Cart</button>
                 </form>
